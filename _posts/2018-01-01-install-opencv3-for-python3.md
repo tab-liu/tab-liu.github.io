@@ -1,16 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  
-    <entry>
-      <title>Install Opencv3 for Python3></title>
-      <url>/opencv/2018/01/01/install-opencv3-for-python3/</url>
-      <content type="text">环境
-Ubuntu 16.04 LTS
+---
+title: Install Opencv3 for Python3
+description: Install Opencv3 for python3
+date: 2018-01-01 18:00
+categories:
+ - opencv
+tags:
+- env
+---
+
+### 环境
+Ubuntu 16.04 LTS  
 Python3.5
 Opencv3
 
-相关的软件包安装
+### 相关的软件包安装
 
+```shell
 [compiler]:  
 sudo apt-get install build-essential
     
@@ -21,37 +26,37 @@ sudo apt install -y libgtk2.0-dev
 
 [optional]: 
 sudo apt -y install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
-
-
-For python3:
+```
+**For python3:**
+```
 sudo apt -y install python3-numpy python3-matplotlib python-opencv
 # 下面的要注意自己的python版本是否为3.5
 sudo apt -y install python3.5-dev
 python3.5-config --includes
 sudo cp /usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h /usr/include/python3.5m
+```
 
-
-
-下载源码
+### 下载源码
 
 从http://opencv.org/releases.html下载source包．
 或者从GitHub下载源码：https://github.com/opencv/opencv
 
 eg:
+```
 git clone https://github.com/opencv/opencv.git
+```
 
-
-
-Building OpenCV from Source Using CMake
+### Building OpenCV from Source Using CMake
 
 创建build目录，在这里会产生许多中间文件。
+```
 cd ~/opencv
 mkdir build
 cd build
+```
 
-
-
-使用下面的编译选项可安装到Python3 (Python3.5)
+***使用下面的编译选项可安装到Python3*** (Python3.5)
+```
 cmake -DBUILD_TIFF=ON \
   -DBUILD_opencv_java=OFF \
   -DWITH_CUDA=OFF \
@@ -70,38 +75,22 @@ cmake -DBUILD_TIFF=ON \
   -DBUILD_TESTS=OFF \
   -DBUILD_PERF_TESTS=OFF \
   -DCMAKE_BUILD_TYPE=RELEASE \
-  -DCMAKE_INSTALL_PREFIX=$(python3 -c &quot;import sys; print(sys.prefix)&quot;) \
+  -DCMAKE_INSTALL_PREFIX=$(python3 -c "import sys; print(sys.prefix)") \
   -DPYTHON_EXECUTABLE=$(which python3) \
-  -DPYTHON_INCLUDE_DIR=$(python3 -c &quot;from distutils.sysconfig import get_python_inc; print(get_python_inc())&quot;) \
+  -DPYTHON_INCLUDE_DIR=$(python3 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
   -DPYTHON_INCLUDE_DIR2=/usr/include/x86_64-linux-gnu/python3.5m \
   -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
   -DPYTHON3_NUMPY_INCLUDE_DIRS=/usr/lib/python3/dist-packages/numpy/core/include \
-  -DPYTHON_PACKAGES_PATH=$(python3 -c &quot;from distutils.sysconfig import get_python_lib; print(get_python_lib())&quot;) .. 
+  -DPYTHON_PACKAGES_PATH=$(python3 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") .. 
+```
 
-
-
-安装
+### 安装
+```
 make -j8
 sudo make install
+```
 
-
-
-
+---
 
 Reference: 
 http://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html
-</content>
-      <categories>
-        
-          <category> opencv </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> env </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
-  
-</search>

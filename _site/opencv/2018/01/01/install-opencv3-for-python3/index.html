@@ -90,7 +90,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="" />
+  <meta name="keywords" content="env," />
 
 
 
@@ -116,17 +116,17 @@
 
 
 
-<meta name="description" content="This post is used for testing tag plugins. See docs for more info.">
-<meta name="keywords" content="Jekyll, NexT">
+<meta name="description" content="Install Opencv3 for python3">
+<meta name="keywords" content="env">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Block">
-<meta property="og:url" content="http://localhost:4000/foo/2013/12/25/block/">
+<meta property="og:title" content="Install Opencv3 for Python3">
+<meta property="og:url" content="http://localhost:4000/opencv/2018/01/01/install-opencv3-for-python3/">
 <meta property="og:site_name" content="NexT">
-<meta property="og:description" content="This post is used for testing tag plugins. See docs for more info.">
+<meta property="og:description" content="Install Opencv3 for python3">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Block">
-<meta name="twitter:description" content="This post is used for testing tag plugins. See docs for more info.">
+<meta name="twitter:title" content="Install Opencv3 for Python3">
+<meta name="twitter:description" content="Install Opencv3 for python3">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -159,7 +159,7 @@
 
 
 
-  <title>Block</title>
+  <title>Install Opencv3 for Python3</title>
   
 
 
@@ -343,7 +343,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/foo/2013/12/25/block/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/opencv/2018/01/01/install-opencv3-for-python3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tab Liu">
@@ -363,7 +363,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Block
+            Install Opencv3 for Python3
           
         </h1>
         
@@ -377,8 +377,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-12-25T08:14:39+08:00">
-                2013-12-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-01T18:00:00+08:00">
+                2018-01-01
               </time>
             
 
@@ -401,8 +401,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Foo" itemprop="url" rel="index">
-                    <span itemprop="name">Foo</span>
+                  <a href="/category/#/opencv" itemprop="url" rel="index">
+                    <span itemprop="name">opencv</span>
                   </a>
                 </span>
 
@@ -419,9 +419,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/foo/2013/12/25/block/#comments" itemprop="discussionUrl">
+                <a href="/opencv/2018/01/01/install-opencv3-for-python3/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="/foo/2013/12/25/block/" itemprop="commentCount"></span>
+                        data-disqus-identifier="/opencv/2018/01/01/install-opencv3-for-python3/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -442,7 +442,7 @@
           
             
                 <div class="post-description">
-                    
+                    Install Opencv3 for python3
                 </div>
             
           
@@ -457,53 +457,92 @@
       
 
       
-        <p>This post is used for testing tag plugins. See <a href="http://zespia.tw/hexo/docs/tag-plugins.html">docs</a> for more info.</p>
+        <h3 id="环境">环境</h3>
+<p>Ubuntu 16.04 LTS<br />
+Python3.5
+Opencv3</p>
 
-<h2 id="block-quote">Block Quote</h2>
+<h3 id="相关的软件包安装">相关的软件包安装</h3>
 
-<h3 id="normal-blockquote">Normal blockquote</h3>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="o">[</span>compiler]:  
+sudo apt-get install build-essential
+    
+<span class="o">[</span>required]: 
+sudo apt install -y libpng12-dev
+sudo apt install -y cmake git pkg-config libavcodec-dev libavformat-dev libswscale-dev
+sudo apt install -y libgtk2.0-dev
 
-<blockquote>
-  <p>Praesent diam elit, interdum ut pulvinar placerat, imperdiet at magna.</p>
-</blockquote>
-
-<h2 id="code-block">Code Block</h2>
-
-<h3 id="inline-code-block">Inline code block</h3>
-
-<p>This is a inline code block: <code class="highlighter-rouge">python</code>, <code class="highlighter-rouge">print 'helloworld'</code>.</p>
-
-<h3 id="normal-code-block">Normal code block</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>alert('Hello World!');
+<span class="o">[</span>optional]: 
+sudo apt -y install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+</code></pre>
+</div>
+<p><strong>For python3:</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt -y install python3-numpy python3-matplotlib python-opencv
+# 下面的要注意自己的python版本是否为3.5
+sudo apt -y install python3.5-dev
+python3.5-config --includes
+sudo cp /usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h /usr/include/python3.5m
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>print "Hello world"
+<h3 id="下载源码">下载源码</h3>
+
+<p>从http://opencv.org/releases.html下载source包．
+或者从GitHub下载源码：https://github.com/opencv/opencv</p>
+
+<p>eg:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/opencv/opencv.git
 </code></pre>
 </div>
 
-<h3 id="highlight-code-block">Highlight code block</h3>
+<h3 id="building-opencv-from-source-using-cmake">Building OpenCV from Source Using CMake</h3>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="s">"Hello world"</span>
+<p>创建build目录，在这里会产生许多中间文件。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/opencv
+mkdir build
+cd build
 </code></pre>
 </div>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">foo</span>
-  <span class="nb">puts</span> <span class="s1">'foo'</span>
-<span class="k">end</span></code></pre></figure>
+<p><strong><em>使用下面的编译选项可安装到Python3</em></strong> (Python3.5)</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>cmake -DBUILD_TIFF=ON \
+  -DBUILD_opencv_java=OFF \
+  -DWITH_CUDA=OFF \
+  -DENABLE_AVX=ON \
+  -DWITH_OPENGL=ON \
+  -DWITH_OPENCL=ON \
+  -DWITH_IPP=ON \
+  -DWITH_TBB=ON \
+  -DWITH_EIGEN=ON \
+  -DWITH_V4L=ON \
+  -DWITH_QT=OFF \
+  -DWITH_GTK=ON \
+  -DWITH_OPENGL=ON \
+  -DBUILD_opencv_python2=OFF \
+  -DBUILD_opencv_python3=ON \
+  -DBUILD_TESTS=OFF \
+  -DBUILD_PERF_TESTS=OFF \
+  -DCMAKE_BUILD_TYPE=RELEASE \
+  -DCMAKE_INSTALL_PREFIX=$(python3 -c "import sys; print(sys.prefix)") \
+  -DPYTHON_EXECUTABLE=$(which python3) \
+  -DPYTHON_INCLUDE_DIR=$(python3 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
+  -DPYTHON_INCLUDE_DIR2=/usr/include/x86_64-linux-gnu/python3.5m \
+  -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
+  -DPYTHON3_NUMPY_INCLUDE_DIRS=/usr/lib/python3/dist-packages/numpy/core/include \
+  -DPYTHON_PACKAGES_PATH=$(python3 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") .. 
+</code></pre>
+</div>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">foo</span>
-  <span class="nb">puts</span> <span class="s1">'foo'</span>
-<span class="k">end</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<h3 id="安装">安装</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>make -j8
+sudo make install
+</code></pre>
+</div>
 
-<h3 id="gist">Gist</h3>
+<hr />
 
-<script src="https://gist.github.com/996818.js"> </script>
-
+<p>Reference: 
+http://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html</p>
 
       
     </div>
@@ -531,34 +570,21 @@
 
     <footer class="post-footer">
       
-
-      
-      
-      
-      
-      
-
-      
-      
-        <div class="post-nav" id="post-nav-id">
-          <div class="post-nav-next post-nav-item">
+        <div class="post-tags">
+          
             
-              <a href="/2013/12/25/excerpts/" rel="next" title="Excerpts">
-                <i class="fa fa-chevron-left"></i> Excerpts
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2013/12/24/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%86%E3%82%B9%E3%83%88/" rel="prev" title="日本語テスト">
-                日本語テスト <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
+            <a href="/tag/#/env" rel="tag"># env</a>
+          
         </div>
+      
+
+      
+      
+      
+      
+      
+
+      
       
       
 
@@ -663,7 +689,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -674,7 +700,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -685,7 +711,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -764,7 +790,7 @@
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#block-quote"> <span class="nav-number">1</span> <span class="nav-text">Block Quote</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#normal-blockquote"> <span class="nav-number">1.1</span> <span class="nav-text">Normal blockquote</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#code-block"> <span class="nav-number">2</span> <span class="nav-text">Code Block</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#inline-code-block"> <span class="nav-number">2.1</span> <span class="nav-text">Inline code block</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#normal-code-block"> <span class="nav-number">2.2</span> <span class="nav-text">Normal code block</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#highlight-code-block"> <span class="nav-number">2.3</span> <span class="nav-text">Highlight code block</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#gist"> <span class="nav-number">2.4</span> <span class="nav-text">Gist</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+      <li class="nav-item nav-level-3"> <a class="nav-link" href="#环境"> <span class="nav-number">1</span> <span class="nav-text">环境</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#相关的软件包安装"> <span class="nav-number">2</span> <span class="nav-text">相关的软件包安装</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#下载源码"> <span class="nav-number">3</span> <span class="nav-text">下载源码</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#building-opencv-from-source-using-cmake"> <span class="nav-number">4</span> <span class="nav-text">Building OpenCV from Source Using CMake</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#安装"> <span class="nav-number">5</span> <span class="nav-text">安装</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
     </ol>
   </div>
             
@@ -960,9 +986,9 @@
       
       <script type="text/javascript">
           var disqus_config = function () {
-              this.page.url = 'http://localhost:4000/foo/2013/12/25/block/';
-              this.page.identifier = '/foo/2013/12/25/block/';
-              this.page.title = 'Block';
+              this.page.url = 'http://localhost:4000/opencv/2018/01/01/install-opencv3-for-python3/';
+              this.page.identifier = '/opencv/2018/01/01/install-opencv3-for-python3/';
+              this.page.title = 'Install Opencv3 for Python3';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://tab.disqus.com/embed.js';
