@@ -42,14 +42,14 @@ sudo cp /usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h /usr/include/python3
 或者从GitHub下载源码：https://github.com/opencv/opencv
 
 eg:
-```bash
+```shell
 git clone https://github.com/opencv/opencv.git
 ```
 
 ### Building OpenCV from Source Using CMake
 
 创建build目录，在这里会产生许多中间文件。
-```bash
+```shell
 cd ~/opencv
 mkdir build
 cd build
