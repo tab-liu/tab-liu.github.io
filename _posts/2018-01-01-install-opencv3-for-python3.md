@@ -28,7 +28,7 @@ sudo apt install -y libgtk2.0-dev
 sudo apt -y install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
 ```
 **For python3:**
-```
+```shell
 sudo apt -y install python3-numpy python3-matplotlib python-opencv
 # 下面的要注意自己的python版本是否为3.5
 sudo apt -y install python3.5-dev
@@ -42,21 +42,21 @@ sudo cp /usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h /usr/include/python3
 或者从GitHub下载源码：https://github.com/opencv/opencv
 
 eg:
-```
+```bash
 git clone https://github.com/opencv/opencv.git
 ```
 
 ### Building OpenCV from Source Using CMake
 
 创建build目录，在这里会产生许多中间文件。
-```
+```bash
 cd ~/opencv
 mkdir build
 cd build
 ```
 
 ***使用下面的编译选项可安装到Python3*** (Python3.5)
-```
+```shell
 cmake -DBUILD_TIFF=ON \
   -DBUILD_opencv_java=OFF \
   -DWITH_CUDA=OFF \
@@ -85,7 +85,7 @@ cmake -DBUILD_TIFF=ON \
 ```
 
 ### 安装
-```
+```shell
 make -j8
 sudo make install
 ```
