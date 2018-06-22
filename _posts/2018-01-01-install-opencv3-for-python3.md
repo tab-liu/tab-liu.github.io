@@ -38,8 +38,8 @@ sudo cp /usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h /usr/include/python3
 
 ### 下载源码
 
-从http://opencv.org/releases.html下载source包．
-或者从GitHub下载源码：https://github.com/opencv/opencv
+从[官网](http://opencv.org/releases.html)下载source包，
+或者从[GitHub](https://github.com/opencv/opencv)下载源码。
 
 eg:
 ```shell
