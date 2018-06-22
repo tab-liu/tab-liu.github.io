@@ -26,8 +26,3 @@ NexT 是由 [Hexo NexT](https://github.com/iissnan/hexo-theme-next) 移植而来
 NexT 主旨在于简洁优雅且易于使用，所以首先要尽量确保 NexT 的简洁易用性。
 
 NexT is built for easily use with elegant appearance. First things first, always keep things simple.
-
-
-## 捐赠
-
-
