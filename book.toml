@@ -1,0 +1,11 @@
+[book]
+authors = ["Tab Liu"]
+language = "zh-CN"
+multilingual = false
+src = "src"
+title = "main_entry"
+
+description = "this is the first book for test"
+
+[rust]
+edition = "2021"
