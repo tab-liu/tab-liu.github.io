@@ -148,8 +148,66 @@
                         <h1 id="说明"><a class="header" href="#说明">说明</a></h1>
 <p>主要用于记录个人学习笔记及日常。</p>
 <p>我的GitHub主页：<a href="https://github.com/tab-liu">https://github.com/tab-liu</a></p>
+<p><a href="http://blog.tabliu.top/book_for_test/">另一本书</a></p>
 <p><img src="./pic/tab-liu.jpg" alt="tab-liu" /></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="我的博客"><a class="header" href="#我的博客">我的博客</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="简介"><a class="header" href="#简介">简介</a></h2>
+<p>关注内容，不花哨，不折腾。</p>
+<p>可以像写书一样成体系，分章节。</p>
+<p>在可以渲染为网页展示的同时，也要对源码进行保存与管理。</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>使用 <strong><a href="https://hellowac.github.io/mdbook-doc-zh/index.html">mdbook</a></strong> + <strong><a href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages">github pages</a></strong></p>
+<p>repo的<code>main</code>分支用于书籍源码管理，<code>gh-pages</code>分支为生成的网页。</p>
+<p>在github上创建用户站点，做为博客入口，展示并链接其它项目站点的文章。</p>
+<p>另创建其它项目站点，用于写一些专题，可在用户站点的首页进行引导。</p>
+<h2 id="github-actions"><a class="header" href="#github-actions">github actions</a></h2>
+<p>在仓库中添加<code>.github/workflows</code>目录，则github会在其中查找<code>*.yml</code>文件自动处理CI/CD。</p>
+<p>这里我们添加个<code>ci.yml</code>文件，内容如下：</p>
+<pre><code class="language-yml">name: GitHub Pages
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        concurrency:
+            group: ${{ github.workflow }}-${{ github.ref }}
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup mdBook
+              uses: peaceiris/actions-mdbook@v1
+              with:
+                  mdbook-version: &quot;latest&quot;
+                  # mdbook-version: &quot;0.4.8&quot;
+
+            - run: mdbook build
+
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@v3
+              if: ${{ github.ref == 'refs/heads/main' }}
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./book
+</code></pre>
+<p>则每次对<code>main</code>分支进行提交时，自动把书籍<code>build</code>到<code>gh-pages</code>分支下。</p>
+<p>注意的是，如果有私有域名，在<strong>用户站点</strong>的配置中添加<code>cname</code>的选项：</p>
+<pre><code class="language-yml">- name: Deploy
+	uses: peaceiris/actions-gh-pages@v3
+	if: ${{ github.ref == 'refs/heads/main' }}
+		with:
+		github_token: ${{ secrets.GITHUB_TOKEN }}
+		publish_dir: ./book
+		# 仅在用户站点下添加下面的配置
+		cname: blog.tabliu.top
+</code></pre>
+<p>更多设置参考<a href="https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-mdbook-rust">这里</a></p>
+<h2 id="设置"><a class="header" href="#设置">设置</a></h2>
+<p>在github仓库中找到<strong>Settings-&gt;Pages</strong>, 选择站点使用的分支与路径，由于上面默认生成站点到<code>gh-pages</code>分支，这里选择<code>gh-pages</code>分支的根目录并保存。</p>
+<p><img src="grocery_store/./pic/github_pages_set.png" alt="" /></p>
 
                     </main>
 
