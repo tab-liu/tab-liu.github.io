@@ -3,9 +3,9 @@ authors = ["Tab Liu"]
 language = "zh-CN"
 multilingual = false
 src = "src"
-title = "main_entry"
+title = "个人博客入口"
 
-description = "this is the first book for test"
+description = "tab liu"
 
 [rust]
 edition = "2021"
