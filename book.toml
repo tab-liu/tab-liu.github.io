@@ -9,3 +9,10 @@ description = "tab liu"
 
 [rust]
 edition = "2021"
+
+# 右上角的github图标链接
+[output.html]
+no-section-label  = true # 左边不显示序号,如"1.1", "1.2.1"
+git-repository-url = "https://github.com/tab-liu/tab-liu.github.io"
+git-repository-icon = "fa-github"
+
