@@ -8,7 +8,7 @@
 
 ## 思路
 
-使用 **[mdbook](https://hellowac.github.io/mdbook-doc-zh/index.html)** + **[github pages](https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages)**
+使用 **[mdbook](https://mirrors.gitcode.host/chinanf-boy/mdBook-zh/format/summary.zh.html)** + **[github pages](https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages)**
 
 repo的`main`分支用于书籍源码管理，`gh-pages`分支为生成的网页。
 
