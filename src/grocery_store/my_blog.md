@@ -69,7 +69,7 @@ jobs:
 		github_token: ${{ secrets.GITHUB_TOKEN }}
 		publish_dir: ./book
 		# 仅在用户站点下添加下面的配置
-		cname: blog.tabliu.top
+		cname: tabliu.top
 ```
 
 更多设置参考[这里](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-mdbook-rust)
