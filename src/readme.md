@@ -6,10 +6,10 @@
 
 [官方版本](https://excalidraw.com/) : 不支持中文手写字体
 
-[我的fork版本](https://tabliu.top/draw) : 改用了中文手写字体
+[我的 fork 版本](https://tabliu.top/draw) : 改用了中文手写字体
 
------
+---
 
-[另一本书](https://blog.tabliu.top/book_for_test/)
+[另一本书](https://tabliu.top/book_for_test/)
 
 ![tab-liu](./pic/tab-liu.jpg)
