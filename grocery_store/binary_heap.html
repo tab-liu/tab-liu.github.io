@@ -166,13 +166,13 @@
 <hr />
 <p>[TOC]</p>
 <h2 id="什么是优先队列"><a class="header" href="#什么是优先队列">什么是优先队列</a></h2>
-<p><strong>优先队列</strong>（<strong>priority queue</strong>）是<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6">计算机科学</a>中的一类<a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E6%95%B8%E6%93%9A%E9%A1%9E%E5%9E%8B">抽象数据类型</a>。优先队列中的每个元素都有各自的优先级，优先级最高的元素最先得到服务；优先级相同的元素按照其在优先队列中的顺序得到服务。优先队列通常使用“<a href="https://zh.wikipedia.org/wiki/%E5%A0%86%E7%A9%8D">堆</a>”（heap）实现。</p>
+<p><strong>优先队列</strong>（<strong>priority queue</strong>）是计算机科学中的一类抽象数据类型(Abstract Data Type)。优先队列中的每个元素都有各自的优先级，优先级最高的元素最先得到服务；优先级相同的元素按照其在优先队列中的顺序得到服务。优先队列通常使用&quot;堆&quot;（heap）实现。二叉堆能保证树中最大的元素处在堆顶，这与优先队列要求优先级最高的元素排在队首相似，因此可以使用二叉堆来实现优先队列。</p>
 <h2 id="支持的操作"><a class="header" href="#支持的操作">支持的操作</a></h2>
 <p>优先队列至少需要支持下述操作：</p>
 <ul>
-<li>插入带优先级的元素（insert_with_priority）</li>
-<li>取出具有最高优先级的元素（pull_highest_priority_element）</li>
-<li>查看最高优先级的元素（peek）：O(1) 时间复杂度</li>
+<li>插入带优先级的元素（insert_with_priority），时间复杂度：$O(\log n)$。</li>
+<li>取出具有最高优先级的元素（pull_highest_priority_element），时间复杂度：$O(\log n)$。</li>
+<li>查看最高优先级的元素（peek）： 时间复杂度 $O(1)$</li>
 </ul>
 <p>其它可选的操作：</p>
 <ul>
@@ -187,7 +187,7 @@
 <p><strong>堆的两个性质：</strong></p>
 <ol>
 <li><strong>结构性</strong>：堆是一颗除底层外被完全填满的二叉树，底层的节点从左到右填入，这样的树叫做<strong>完全二叉树。</strong></li>
-<li><strong>堆序性：<strong>由于我们想很快找出最小元，则最小元应该在根上，<strong>任意节点都小于它的后裔</strong>，这就是</strong>小顶堆（Min-Heap）</strong>；如果是查找最大元，则最大元应该在根上，<strong>任意节点都要大于它的后裔</strong>，这就是<strong>大顶堆(Max-heap)。</strong></li>
+<li><strong>堆序性：<strong>由于我们想很快找出最小元，则最小元应该在根上，<strong>任意节点都小于它的子节点</strong>，这就是</strong>小顶堆（Min-Heap）</strong>；如果是查找最大元，则最大元应该在根上，<strong>任意节点都要大于它的子节点</strong>，这就是<strong>大顶堆(Max-Heap)。</strong></li>
 </ol>
 
                     </main>
