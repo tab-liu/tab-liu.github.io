@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <binary_heap.h>
+#include "binary_heap.h"
 
 #define swap(a, b) \
     ({             \
@@ -14,76 +14,28 @@
     })
 
 static void shift_up(struct my_heap *heap, int index) {
-    int parent_idx = (index - 1) / 2;
-    while (index > 0 && heap->data[index] > heap->data[parent_idx]) {
-        swap(heap->data[index], heap->data[parent_idx]);
-        index = parent_idx;
-        parent_idx = (index - 1) / 2;
-    }
-    return;
-}
-
-static void shift_up1(struct my_heap *heap, int index) {
-    int parent;
-    for (int i = index; i > 0; i--) {
-        parent = (i - 1) / 2;
-        if (heap->data[i] <= heap->data[parent]) {
-            return;
-        }
-        swap(heap->data[i], heap->data[parent]);
-        i = parent;
+    while (index > 0 && heap->data[index] > heap->data[(index - 1) / 2]) {
+        swap(heap->data[index], heap->data[(index - 1) / 2]);
+        index = (index - 1) / 2;
     }
     return;
 }
 
 static void shift_down(struct my_heap *heap, int index) {
-    int left, right;
-    int tmp = index;
-    while (left < heap->size) {
-        left = 2 * index + 1;
-        right = 2 * index + 2;
-        if (heap->data[left] > heap->data[index]) {
-            tmp = left;
-        }
-        if (right < heap->size && heap->data[right] > heap->data[tmp]) {
-            tmp = right;
-        }
-        if (tmp == index) {
-            break;
-        }
-        swap(heap->data[index], heap->data[tmp]);
-        index = tmp;
+    int largest = index;
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+
+    if (left < heap->size && heap->data[left] > heap->data[largest]) {
+        largest = left;
     }
-}
-
-static void shift_down1(struct my_heap *heap, int index) {
-    int left, right, tmp;
-    for (int i = index; 2 * i + 1 < heap->size; i++) {
-        tmp = i;
-        left = 2 * i + 1;
-        right = 2 * i + 2;
-
-        if (heap->data[left] > heap->data[i]) {
-            tmp = left;
-        }
-        if (right < heap->size && heap->data[right] > heap->data[i]) {
-            tmp = right;
-        }
-        if (tmp == i) {
-            break;
-        }
-        swap(heap->data[i], heap->data[tmp]);
-        i = tmp;
+    if (right < heap->size && heap->data[right] > heap->data[largest]) {
+        largest = right;
     }
-    return;
-}
-
-struct my_heap *heap_new(int cap) {
-    struct my_heap *heap = malloc(sizeof(struct my_heap));
-    heap->data = malloc(sizeof(int) * cap);
-    heap->capacity = cap;
-    heap->size = 0;
-    return heap;
+    if (largest != index) {
+        swap(heap->data[index], heap->data[largest]);
+        shift_down(heap, largest);
+    }
 }
 
 void heapify(struct my_heap *heap) {
@@ -93,11 +45,33 @@ void heapify(struct my_heap *heap) {
     return;
 }
 
+void heap_sort(struct my_heap *heap) {
+    heapify(heap);
+    for (int i = heap->size - 1; i > 0; i--) {
+        swap(heap->data[i], heap->data[0]);
+        heap->size--;
+        shift_down(heap, 0);
+    }
+}
+
 bool push(struct my_heap *heap, int val) {
+    if (heap->size == heap->capacity) {
+        return false;
+    }
+    heap->data[heap->size] = val;
+    heap->size++;
+    shift_up(heap, heap->size - 1);
     return true;
 }
 
 bool pop(struct my_heap *heap, int *val) {
+    if (heap->size == 0) {
+        return false;
+    }
+    *val = heap->data[0];
+    heap->data[0] = heap->data[heap->size - 1];
+    heap->size--;
+    shift_down(heap, 0);
     return true;
 }
 
