@@ -168,13 +168,13 @@
 <hr />
 <p>[TOC]</p>
 <h2 id="什么是优先队列"><a class="header" href="#什么是优先队列">什么是优先队列</a></h2>
-<p><strong>优先队列</strong>（<strong>priority queue</strong>）是计算机科学中的一类抽象数据类型(Abstract Data Type)。优先队列中的每个元素都有各自的优先级，优先级最高的元素最先得到服务；优先级相同的元素按照其在优先队列中的顺序得到服务。优先队列通常使用&quot;堆&quot;（heap）实现。二叉堆能保证树中最大的元素处在堆顶，这与优先队列要求优先级最高的元素排在队首相似，因此可以使用二叉堆来实现优先队列。</p>
+<p><strong>优先队列</strong>（<strong>priority queue</strong>）是计算机科学中的一类抽象数据类型(Abstract Data Type)。优先队列中的每个元素都有各自的优先级，优先级最高的元素最先得到服务；优先级相同的元素按照其在优先队列中的顺序得到服务。优先队列通常使用&quot;二叉堆&quot;（binary heap）实现。二叉堆能保证树中最大的元素处在堆顶，这与优先队列要求优先级最高的元素排在队首相似，因此可以使用二叉堆来实现优先队列。</p>
 <h2 id="支持的操作"><a class="header" href="#支持的操作">支持的操作</a></h2>
-<p>优先队列至少需要支持下述操作：</p>
+<p>优先队列一般至少需要支持下述操作：</p>
 <ul>
-<li>插入带优先级的元素（insert_with_priority），时间复杂度：$O(\log n)$。</li>
-<li>取出具有最高优先级的元素（pull_highest_priority_element），时间复杂度：$O(\log n)$。</li>
-<li>查看最高优先级的元素（peek）： 时间复杂度 $O(1)$</li>
+<li>插入元素（push），时间复杂度：$O(\log n)$。</li>
+<li>取出元素（pop），时间复杂度：$O(\log n)$。</li>
+<li>查看元素（peek），时间复杂度：$O(1)$</li>
 </ul>
 <p>其它可选的操作：</p>
 <ul>
@@ -189,8 +189,42 @@
 <p><strong>堆的两个性质：</strong></p>
 <ol>
 <li><strong>结构性</strong>：堆是一颗除底层外被完全填满的二叉树，底层的节点从左到右填入，这样的树叫做<strong>完全二叉树。</strong></li>
-<li><strong>堆序性：<strong>由于我们想很快找出最小元，则最小元应该在根上，<strong>任意节点都小于它的子节点</strong>，这就是</strong>小顶堆（Min-Heap）</strong>；如果是查找最大元，则最大元应该在根上，<strong>任意节点都要大于它的子节点</strong>，这就是<strong>大顶堆(Max-Heap)。</strong></li>
+<li><strong>堆序性：<strong>由于我们想很快找出最小元，则最小元素应该在根上，<strong>任意节点都小于它的子节点</strong>，这就是</strong>小顶堆（Min-Heap）</strong>；如果是查找最大元，则最大元素应该在根上，<strong>任意节点都要大于它的子节点</strong>，这就是<strong>大顶堆(Max-Heap)。</strong></li>
 </ol>
+<p><img src="./pic/max_heap.png" alt="大顶堆" /></p>
+<p><img src="./pic/min_heap.png" alt="最小堆" /></p>
+<h2 id="内存模型"><a class="header" href="#内存模型">内存模型</a></h2>
+<p>二叉堆通常用数组来表示，因为一棵高度为 $h$ 的完全二叉树有 $2^h$ 到 $2^{(h+1)}-1$个节点，这样存放一个二叉堆就不会太浪费空间（不需要额外的指针），而且一旦知道高度，就可以知道节点数的范围。</p>
+<p>我们使用层序遍历的方式将二叉树的节点存储在数组中，由于二叉堆是完全二叉树，所以可以将树型结构映射到线性数组空间之中且不产生空间浪费，反而因为不需要存储指针元素节省了空间。</p>
+<p>但这样又如何索引其父节点与子节点呢（根节点的 $index$ 为0）？</p>
+<p>假设一个节点 $index$ 为 $i$ ，则其：</p>
+<ul>
+<li>
+<p>左子节点：$2i + 1$</p>
+</li>
+<li>
+<p>右子节点：$2i+2$</p>
+</li>
+<li>
+<p>父节点：$(i-1)/2$</p>
+</li>
+</ul>
+<p>这个数组从逻辑上说就是一个堆结构，我们用公式重新描述堆的定义：</p>
+<ul>
+<li>
+<p>大顶堆：$arr[i] \geq arr[2i+1]$ &amp;&amp; $arr[i] \geq arr[2i+2]$</p>
+</li>
+<li>
+<p>小顶堆：$arr[i] \leq arr[2i+1]$ &amp;&amp; $arr[i] \leq arr[2i+2]$</p>
+</li>
+</ul>
+<h2 id="数据结构"><a class="header" href="#数据结构">数据结构</a></h2>
+<pre><code class="language-c">struct my_heap {
+    int *vec;
+    int size;
+    int capacity;
+}
+</code></pre>
 
                     </main>
 
