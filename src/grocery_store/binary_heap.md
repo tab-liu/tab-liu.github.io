@@ -81,9 +81,134 @@ https://blog.csdn.net/u014386899/article/details/108141606
 
 ```c
 struct my_heap {
-    int *vec;
-    int size;
-    int capacity;
+    int *data;		/* 元素存储地址 */
+    int size;		/* 元素个数 */
+    int capacity;	/* 容量 */
+};
+```
+
+## 操作
+
+下面以最大堆为例，使用图片简单介绍下它的基本操作，并附上C语言版的demo示例程序：
+
+### 插入
+
+最大堆的插入操作可以简单看成是“**结点上浮**”。当我们在向最大堆中插入一个结点我们必须满足完全二叉树的标准，那么被插入结点的位置的是固定的。而且要满足父结点关键字值不小于子结点关键字值，那么我们就需要去移动父结点和子结点的相互位置关系。如下图所示：
+
+![max_heap_push](./pic/max_heap_push.png)
+
+由于堆是一棵完全二叉树，存在 $n$ 个元素，那么他的高度为：$\log(n+1)$，这就说明代码中的`for`循环最多会执行 $O(\log n)$ 次。因此插入函数的时间复杂度为：$O(\log n)$。
+
+```c
+void shift_up(struct my_heap *heap, int index) {
+    while (index > 0 && heap->data[index] > heap->data[(index - 1) / 2]) {
+        swap(heap->data[index], heap->data[(index - 1) / 2]);
+        index = (index - 1) / 2;
+    }
+    return;
+}
+
+bool push(struct my_heap *heap, int val) {
+    if (heap->size == heap->capacity) {
+        return false;
+    }
+    heap->data[heap->size] = val;
+    heap->size++;
+    shift_up(heap, heap->size - 1);
+    return true;
 }
 ```
 
+
+
+### 删除
+
+最大堆的删除操作，总是从堆的**根结点**删除元素。同样根元素被删除之后为了能够保证该树还是一个完全二叉树，我们需要来移动完全二叉树的最后一个结点，让其继续符合完全二叉树的定义，从这里可以看作是最大堆最后一个结点的**下沉**操作。如图：
+
+
+
+![max_heap_pop_0](./pic/max_heap_pop_0.png)
+
+![max_heap_pop_1](./pic/max_heap_pop_1.png)
+
+同最大堆的插入操作类似，同样包含 $n$ 个元素的最大堆，其高度为：$\log(n+1)$，其时间复杂度为：$O(\log n)$。
+
+```c
+void shift_down(struct my_heap *heap, int index) {
+    int largest = index;
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+
+    if (left < heap->size && heap->data[left] > heap->data[largest]) {
+        largest = left;
+    }
+    if (right < heap->size && heap->data[right] > heap->data[largest]) {
+        largest = right;
+    }
+    if (largest != index) {
+        swap(heap->data[index], heap->data[largest]);
+        shift_down(heap, largest);
+    }
+}
+
+bool pop(struct my_heap *heap, int *val) {
+    if (heap->size == 0) {
+        return false;
+    }
+    *val = heap->data[0];
+    heap->data[0] = heap->data[heap->size - 1];
+    heap->size--;
+    shift_down(heap, 0);
+    return true;
+}
+```
+
+
+
+### 查找
+
+查找就很简单了，因为是优先队列，考虑的是如何快速获取最优先的元素，而二叉堆中，最大/最小元素总是会自动调节到根的位置，所以我们只需要访问根元素即可。
+
+```c
+bool peek(struct my_heap *heap, int *val) {
+    if (heap->size > 0) {
+        *val = heap->data[0];
+        return true;
+    }
+    return false;
+}
+```
+
+
+
+### 创建
+
+为什么要把最大堆的创建放在最后来讲？因为在堆的创建过程中，有两个方法。会分别用到最大堆的插入和最大堆的删除原理（上浮与下沉）：
+
+1. 先创建一个**空堆**，然后根据元素一个一个去插入结点。由于插入操作的时间复杂度为$O(\log n)$，那么 $n$ 个元素插入进去，总的时间复杂度为 $O(n \log n)$。
+2. 由于二叉堆以数组形式表 $n$ 个元素的一个完全二叉树，我们直接调整各个结点的位置来满足最大堆的特性即可，这个过程也叫**堆化**（Heapify），总的时间复杂度为 $O(n)$。
+
+> 思考：为什么堆化的时间复杂度是 $O(n) $呢？
+
+现在我们通过堆化的方式直接从数组创建一个最大堆，假设数组为`[79,66,43,83,30,87,38,55,91,72,49,9]`，其对应的完全二叉树如下图所示：
+
+![heapify_0](./pic/heapify_0.png)
+
+但是这明显不符合最大堆的定义，所以我们需要让该完全二叉树转换成最大堆！怎么转换成一个最大堆呢？
+最大堆有一个特点就是其各个子树都是一个最大堆，那么我们就可以从把最小子树转换成一个最大堆，然后依次转换它的父节点对应的子树，直到最后的根节点所在的整个完全二叉树变成最大堆。
+
+从最后一个非叶子结点开始**从下往上**调整，然后依次去找倒数第二个，倒数第三个非叶子节点…
+
+最后一个非叶子节点其实就是最后一个叶子节点的父节点：如果元素个数为 $n$ ，则最后一个非叶子节点的`index`为$(n - 1) / 2$。
+
+
+
+## 堆排序
+
+
+
+## 应用
+
+
+
+## 堆化的时间复杂度推导
