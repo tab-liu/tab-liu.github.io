@@ -38,24 +38,24 @@ int main() {
 
     heap_show(&heap);
 
-    int *val;
-    pop(&heap, val);
-    printf("%d\n", *val);
+    int val;
+    pop(&heap, &val);
+    printf("%d\n", val);
 
     heap_show(&heap);
 
-    pop(&heap, val);
-    printf("%d\n", *val);
+    pop(&heap, &val);
+    printf("%d\n", val);
 
     heap_show(&heap);
 
-    pop(&heap, val);
-    printf("%d\n", *val);
+    pop(&heap, &val);
+    printf("%d\n", val);
 
     heap_show(&heap);
 
-    pop(&heap, val);
-    printf("%d\n", *val);
+    pop(&heap, &val);
+    printf("%d\n", val);
 
     heap_show(&heap);
 
