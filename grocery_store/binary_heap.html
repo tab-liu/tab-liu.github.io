@@ -220,11 +220,96 @@
 </ul>
 <h2 id="数据结构"><a class="header" href="#数据结构">数据结构</a></h2>
 <pre><code class="language-c">struct my_heap {
-    int *vec;
-    int size;
-    int capacity;
+    int *data;		/* 元素存储地址 */
+    int size;		/* 元素个数 */
+    int capacity;	/* 容量 */
+};
+</code></pre>
+<h2 id="操作"><a class="header" href="#操作">操作</a></h2>
+<p>下面以最大堆为例，使用图片简单介绍下它的基本操作，并附上C语言版的demo示例程序：</p>
+<h3 id="插入"><a class="header" href="#插入">插入</a></h3>
+<p>最大堆的插入操作可以简单看成是“<strong>结点上浮</strong>”。当我们在向最大堆中插入一个结点我们必须满足完全二叉树的标准，那么被插入结点的位置的是固定的。而且要满足父结点关键字值不小于子结点关键字值，那么我们就需要去移动父结点和子结点的相互位置关系。如下图所示：</p>
+<p><img src="./pic/max_heap_push.png" alt="max_heap_push" /></p>
+<p>由于堆是一棵完全二叉树，存在 $n$ 个元素，那么他的高度为：$\log(n+1)$，这就说明代码中的<code>for</code>循环最多会执行 $O(\log n)$ 次。因此插入函数的时间复杂度为：$O(\log n)$。</p>
+<pre><code class="language-c">void shift_up(struct my_heap *heap, int index) {
+    while (index &gt; 0 &amp;&amp; heap-&gt;data[index] &gt; heap-&gt;data[(index - 1) / 2]) {
+        swap(heap-&gt;data[index], heap-&gt;data[(index - 1) / 2]);
+        index = (index - 1) / 2;
+    }
+    return;
+}
+
+bool push(struct my_heap *heap, int val) {
+    if (heap-&gt;size == heap-&gt;capacity) {
+        return false;
+    }
+    heap-&gt;data[heap-&gt;size] = val;
+    heap-&gt;size++;
+    shift_up(heap, heap-&gt;size - 1);
+    return true;
 }
 </code></pre>
+<h3 id="删除"><a class="header" href="#删除">删除</a></h3>
+<p>最大堆的删除操作，总是从堆的<strong>根结点</strong>删除元素。同样根元素被删除之后为了能够保证该树还是一个完全二叉树，我们需要来移动完全二叉树的最后一个结点，让其继续符合完全二叉树的定义，从这里可以看作是最大堆最后一个结点的<strong>下沉</strong>操作。如图：</p>
+<p><img src="./pic/max_heap_pop_0.png" alt="max_heap_pop_0" /></p>
+<p><img src="./pic/max_heap_pop_1.png" alt="max_heap_pop_1" /></p>
+<p>同最大堆的插入操作类似，同样包含 $n$ 个元素的最大堆，其高度为：$\log(n+1)$，其时间复杂度为：$O(\log n)$。</p>
+<pre><code class="language-c">void shift_down(struct my_heap *heap, int index) {
+    int largest = index;
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+
+    if (left &lt; heap-&gt;size &amp;&amp; heap-&gt;data[left] &gt; heap-&gt;data[largest]) {
+        largest = left;
+    }
+    if (right &lt; heap-&gt;size &amp;&amp; heap-&gt;data[right] &gt; heap-&gt;data[largest]) {
+        largest = right;
+    }
+    if (largest != index) {
+        swap(heap-&gt;data[index], heap-&gt;data[largest]);
+        shift_down(heap, largest);
+    }
+}
+
+bool pop(struct my_heap *heap, int *val) {
+    if (heap-&gt;size == 0) {
+        return false;
+    }
+    *val = heap-&gt;data[0];
+    heap-&gt;data[0] = heap-&gt;data[heap-&gt;size - 1];
+    heap-&gt;size--;
+    shift_down(heap, 0);
+    return true;
+}
+</code></pre>
+<h3 id="查找"><a class="header" href="#查找">查找</a></h3>
+<p>查找就很简单了，因为是优先队列，考虑的是如何快速获取最优先的元素，而二叉堆中，最大/最小元素总是会自动调节到根的位置，所以我们只需要访问根元素即可。</p>
+<pre><code class="language-c">bool peek(struct my_heap *heap, int *val) {
+    if (heap-&gt;size &gt; 0) {
+        *val = heap-&gt;data[0];
+        return true;
+    }
+    return false;
+}
+</code></pre>
+<h3 id="创建"><a class="header" href="#创建">创建</a></h3>
+<p>为什么要把最大堆的创建放在最后来讲？因为在堆的创建过程中，有两个方法。会分别用到最大堆的插入和最大堆的删除原理（上浮与下沉）：</p>
+<ol>
+<li>先创建一个<strong>空堆</strong>，然后根据元素一个一个去插入结点。由于插入操作的时间复杂度为$O(\log n)$，那么 $n$ 个元素插入进去，总的时间复杂度为 $O(n \log n)$。</li>
+<li>由于二叉堆以数组形式表 $n$ 个元素的一个完全二叉树，我们直接调整各个结点的位置来满足最大堆的特性即可，这个过程也叫<strong>堆化</strong>（Heapify），总的时间复杂度为 $O(n)$。</li>
+</ol>
+<blockquote>
+<p>思考：为什么堆化的时间复杂度是 $O(n) $呢？</p>
+</blockquote>
+<p>现在我们通过堆化的方式直接从数组创建一个最大堆，假设数组为<code>[79,66,43,83,30,87,38,55,91,72,49,9]</code>，其对应的完全二叉树如下图所示：</p>
+<p><img src="./pic/heapify_0.png" alt="heapify_0" /></p>
+<p>但是这明显不符合最大堆的定义，所以我们需要让该完全二叉树转换成最大堆！怎么转换成一个最大堆呢？
+最大堆有一个特点就是其各个子树都是一个最大堆，那么我们就可以从把最小子树转换成一个最大堆，然后依次转换它的父节点对应的子树，直到最后的根节点所在的整个完全二叉树变成最大堆。</p>
+<p>从最后一个非叶子结点开始<strong>从下往上</strong>调整，然后依次去找倒数第二个，倒数第三个非叶子节点…</p>
+<p>最后一个非叶子节点其实就是最后一个叶子节点的父节点：如果元素个数为 $n$ ，则最后一个非叶子节点的<code>index</code>为$(n - 1) / 2$。</p>
+<h2 id="堆排序"><a class="header" href="#堆排序">堆排序</a></h2>
+<h2 id="应用"><a class="header" href="#应用">应用</a></h2>
+<h2 id="堆化的时间复杂度推导"><a class="header" href="#堆化的时间复杂度推导">堆化的时间复杂度推导</a></h2>
 
                     </main>
 
