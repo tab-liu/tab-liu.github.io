@@ -1,26 +1,5 @@
 # 优先队列简介
 
------------
-
-1.  概念介绍
-2.  引入大顶堆 (各种堆), 对比数组o(n), O(log(n))
-3.  完全二叉树, 其它树的区别
-4.  数组存储, 下标索引
-5.  数据结构介绍
-6.  方法图解 (插入, 删除, 堆化)
-7.  堆化时间复杂度O(n)证明
-8.  代码示例(c语言版)
-9.  空穴方式优化
-10.  应用:优先队列常用于操作系统的任务调度，也是贪心算法的重要组成部分。
-
----------
-
-https://blog.csdn.net/u014386899/article/details/108141606
-
-
-
-----------
-
 [TOC]
 
 ## 什么是优先队列
@@ -199,16 +178,83 @@ bool peek(struct my_heap *heap, int *val) {
 
 从最后一个非叶子结点开始**从下往上**调整，然后依次去找倒数第二个，倒数第三个非叶子节点…
 
-最后一个非叶子节点其实就是最后一个叶子节点的父节点：如果元素个数为 $n$ ，则最后一个非叶子节点的`index`为$(n - 1) / 2$。
+最后一个非叶子节点其实就是最后一个叶子节点的父节点：如果元素个数为 $n$ ，则最后一个非叶子节点的`index`为$n / 2 - 1$。
+
+这个调整过程，我们会使用到节点删除操作中的**下沉**动作。过程如下图：
+
+![heapify_1](./pic/heapify_1.png)
+
+![heapify_2](./pic/heapify_2.png)
+
+![heapify_3](./pic/heapify_3.png)
+
+![heapify_4](./pic/heapify_4.png)
+
+![heapify_5](./pic/heapify_5.png)
+
+![heapify_6](./pic/heapify_6.png)
+
+最终结果如下：
+
+![heapify_7](./pic/heapify_7.png)
+
+```c
+void heapify(struct my_heap *heap) {
+    for (int i = heap->size / 2 - 1; i >= 0; i--) {
+        shift_down(heap, i);
+    }
+    return;
+}
+```
 
 
 
 ## 堆排序
 
+堆排序底层使用的也是二叉堆，在之前基础上扩展下，看看堆排序是如何做的。
+
+- 升序 --> 使用大顶堆
+
+- 降序 --> 使用小顶堆
+
+步骤：
+
+1. 先$n$个元素的无序序列，构建成大顶堆
+
+2. 将根节点与最后一个元素交换位置
+
+3. 交换过后可能不再满足大顶堆的条件，将堆顶**下沉**，重新构建成大顶堆
+
+4. 重复第二步、第三步直到整个数组排序完成
+
+我们使用如下数据为例，图解排序过程：
+
+![heap_sort_0](./pic/heap_sort_0.png)
 
 
-## 应用
+![heap_sort_1](./pic/heap_sort_1.png)
 
 
+![heap_sort_2](./pic/heap_sort_2.png)
 
-## 堆化的时间复杂度推导
+
+![heap_sort_3](./pic/heap_sort_3.png)
+
+![heap_sort_4](./pic/heap_sort_4.png)
+
+最后，数组被成功排序，示例demo：
+
+
+```c
+void heap_sort(struct my_heap *heap) {
+    heapify(heap);
+    for (int i = heap->size - 1; i > 0; i--) {
+        swap(heap->data[i], heap->data[0]);
+        heap->size--;
+        shift_down(heap, 0);
+    }
+}
+```
+
+堆排序是一种选择排序，整体主要由构建初始堆，交换堆顶元素和末尾元素并重建堆两部分组成。其中构建初始堆经推导复杂度为$O(n)$，在交换并重建堆的过程中，需交换$n-1$次，而重建堆的过程中，根据完全二叉树的性质，$[\log(n-1),\log (n-2), \cdots, 1]$逐步递减，近似为$n \log n$。所以堆排序时间复杂度一般认为就是$O(n \ log n)$。
+
