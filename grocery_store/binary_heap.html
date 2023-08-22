@@ -150,22 +150,6 @@
                         <div class="sidetoc"><nav class="pagetoc"></nav></div>
 
                         <h1 id="优先队列简介"><a class="header" href="#优先队列简介">优先队列简介</a></h1>
-<hr />
-<ol>
-<li>概念介绍</li>
-<li>引入大顶堆 (各种堆), 对比数组o(n), O(log(n))</li>
-<li>完全二叉树, 其它树的区别</li>
-<li>数组存储, 下标索引</li>
-<li>数据结构介绍</li>
-<li>方法图解 (插入, 删除, 堆化)</li>
-<li>堆化时间复杂度O(n)证明</li>
-<li>代码示例(c语言版)</li>
-<li>空穴方式优化</li>
-<li>应用:优先队列常用于操作系统的任务调度，也是贪心算法的重要组成部分。</li>
-</ol>
-<hr />
-<p>https://blog.csdn.net/u014386899/article/details/108141606</p>
-<hr />
 <p>[TOC]</p>
 <h2 id="什么是优先队列"><a class="header" href="#什么是优先队列">什么是优先队列</a></h2>
 <p><strong>优先队列</strong>（<strong>priority queue</strong>）是计算机科学中的一类抽象数据类型(Abstract Data Type)。优先队列中的每个元素都有各自的优先级，优先级最高的元素最先得到服务；优先级相同的元素按照其在优先队列中的顺序得到服务。优先队列通常使用&quot;二叉堆&quot;（binary heap）实现。二叉堆能保证树中最大的元素处在堆顶，这与优先队列要求优先级最高的元素排在队首相似，因此可以使用二叉堆来实现优先队列。</p>
@@ -306,10 +290,65 @@ bool pop(struct my_heap *heap, int *val) {
 <p>但是这明显不符合最大堆的定义，所以我们需要让该完全二叉树转换成最大堆！怎么转换成一个最大堆呢？
 最大堆有一个特点就是其各个子树都是一个最大堆，那么我们就可以从把最小子树转换成一个最大堆，然后依次转换它的父节点对应的子树，直到最后的根节点所在的整个完全二叉树变成最大堆。</p>
 <p>从最后一个非叶子结点开始<strong>从下往上</strong>调整，然后依次去找倒数第二个，倒数第三个非叶子节点…</p>
-<p>最后一个非叶子节点其实就是最后一个叶子节点的父节点：如果元素个数为 $n$ ，则最后一个非叶子节点的<code>index</code>为$(n - 1) / 2$。</p>
+<p>最后一个非叶子节点其实就是最后一个叶子节点的父节点：如果元素个数为 $n$ ，则最后一个非叶子节点的<code>index</code>为$n / 2 - 1$。</p>
+<p>这个调整过程，我们会使用到节点删除操作中的<strong>下沉</strong>动作。过程如下图：</p>
+<p><img src="./pic/heapify_1.png" alt="heapify_1" /></p>
+<p><img src="./pic/heapify_2.png" alt="heapify_2" /></p>
+<p><img src="./pic/heapify_3.png" alt="heapify_3" /></p>
+<p><img src="./pic/heapify_4.png" alt="heapify_4" /></p>
+<p><img src="./pic/heapify_5.png" alt="heapify_5" /></p>
+<p><img src="./pic/heapify_6.png" alt="heapify_6" /></p>
+<p>最终结果如下：</p>
+<p><img src="./pic/heapify_7.png" alt="heapify_7" /></p>
+<pre><code class="language-c">void heapify(struct my_heap *heap) {
+    for (int i = heap-&gt;size / 2 - 1; i &gt;= 0; i--) {
+        shift_down(heap, i);
+    }
+    return;
+}
+</code></pre>
 <h2 id="堆排序"><a class="header" href="#堆排序">堆排序</a></h2>
-<h2 id="应用"><a class="header" href="#应用">应用</a></h2>
-<h2 id="堆化的时间复杂度推导"><a class="header" href="#堆化的时间复杂度推导">堆化的时间复杂度推导</a></h2>
+<p>堆排序底层使用的也是二叉堆，在之前基础上扩展下，看看堆排序是如何做的。</p>
+<ul>
+<li>
+<p>升序 --&gt; 使用大顶堆</p>
+</li>
+<li>
+<p>降序 --&gt; 使用小顶堆</p>
+</li>
+</ul>
+<p>步骤：</p>
+<ol>
+<li>
+<p>先$n$个元素的无序序列，构建成大顶堆</p>
+</li>
+<li>
+<p>将根节点与最后一个元素交换位置</p>
+</li>
+<li>
+<p>交换过后可能不再满足大顶堆的条件，将堆顶<strong>下沉</strong>，重新构建成大顶堆</p>
+</li>
+<li>
+<p>重复第二步、第三步直到整个数组排序完成</p>
+</li>
+</ol>
+<p>我们使用如下数据为例，图解排序过程：</p>
+<p><img src="./pic/heap_sort_0.png" alt="heap_sort_0" /></p>
+<p><img src="./pic/heap_sort_1.png" alt="heap_sort_1" /></p>
+<p><img src="./pic/heap_sort_2.png" alt="heap_sort_2" /></p>
+<p><img src="./pic/heap_sort_3.png" alt="heap_sort_3" /></p>
+<p><img src="./pic/heap_sort_4.png" alt="heap_sort_4" /></p>
+<p>最后，数组被成功排序，示例demo：</p>
+<pre><code class="language-c">void heap_sort(struct my_heap *heap) {
+    heapify(heap);
+    for (int i = heap-&gt;size - 1; i &gt; 0; i--) {
+        swap(heap-&gt;data[i], heap-&gt;data[0]);
+        heap-&gt;size--;
+        shift_down(heap, 0);
+    }
+}
+</code></pre>
+<p>堆排序是一种选择排序，整体主要由构建初始堆，交换堆顶元素和末尾元素并重建堆两部分组成。其中构建初始堆经推导复杂度为$O(n)$，在交换并重建堆的过程中，需交换$n-1$次，而重建堆的过程中，根据完全二叉树的性质，$[\log(n-1),\log (n-2), \cdots, 1]$逐步递减，近似为$n \log n$。所以堆排序时间复杂度一般认为就是$O(n \ log n)$。</p>
 
                     </main>
 
