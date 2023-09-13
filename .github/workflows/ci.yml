@@ -15,7 +15,6 @@ jobs:
             group: ${{ github.workflow }}-${{ github.ref }}
         steps:
             - uses: actions/checkout@v4.0.0
-            - uses: drmingdrmer/mdbook-full@main
 
             - name: Setup mdBook
               uses: peaceiris/actions-mdbook@v1.2.0
@@ -23,10 +22,18 @@ jobs:
                   mdbook-version: "latest"
 
             # 使用katex，以支持常规的$行内公式$
+            - name: Install mdbook-katex
+              run: |
+                  curl -Lo mdbook-katex.tar.gz https://github.com/lzanini/mdbook-katex/releases/download/v0.5.7/mdbook-katex-v0.5.7-x86_64-unknown-linux-gnu.tar.gz
+                  tar xzf mdbook-katex.tar.gz
+                  mv mdbook-katex /home/runner/toolbin/mdbook-katex
+
             # - name: Setup mdbook-katex
             #   uses: magicgh/mdbook-katex-action@v1.1.0
-            #   with:
-            #       version: "latest"
+            #   run: |
+            #       curl -L -o mdbook-katex.tar.gz https://github.com/huhu/md
+            # #   with:
+            # #       version: "latest"
 
             - run: mdbook build
 
