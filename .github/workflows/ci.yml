@@ -23,10 +23,10 @@ jobs:
                   mdbook-version: "latest"
 
             # 使用katex，以支持常规的$行内公式$
-            - name: Setup mdbook-katex
-              uses: magicgh/mdbook-katex-action@v1.1.0
-              with:
-                  version: "latest"
+            # - name: Setup mdbook-katex
+            #   uses: magicgh/mdbook-katex-action@v1.1.0
+            #   with:
+            #       version: "latest"
 
             - run: mdbook build
 
