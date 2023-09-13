@@ -19,5 +19,6 @@ additional-css = ["theme/style.css"]
 additional-js = ["theme/sidebar.js"]
 mathjax-support = true                                              # 数学公式支持
 
+
 [preprocessor.katex]
-katexjs = "https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"
+after = ["links"]
