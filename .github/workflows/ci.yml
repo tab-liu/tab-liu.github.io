@@ -22,6 +22,12 @@ jobs:
                   mdbook-version: "latest"
                   # mdbook-version: "0.4.8"
 
+            # 使用katex，以支持常规的$行内公式$
+            - name: Setup mdbook-katex
+              uses: magicgh/mdbook-katex-action@v1
+              with:
+                  version: "latest"
+
             - run: mdbook build
 
             - name: Deploy
