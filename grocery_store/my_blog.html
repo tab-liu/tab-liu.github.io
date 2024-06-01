@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">说明</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">杂货店</li><li class="chapter-item expanded "><a href="../grocery_store/my_blog.html" class="active">我的博客搭建</a></li><li class="chapter-item expanded "><a href="../grocery_store/binary_heap.html">优先队列简介</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">说明</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">杂货店</li><li class="chapter-item expanded "><a href="../grocery_store/my_blog.html" class="active">我的博客搭建</a></li><li class="chapter-item expanded "><a href="../grocery_store/binary_heap.html">优先队列简介</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -184,8 +184,8 @@ jobs:
             - name: Setup mdBook
               uses: peaceiris/actions-mdbook@v1
               with:
-                  mdbook-version: &quot;latest&quot;
-                  # mdbook-version: &quot;0.4.8&quot;
+                  mdbook-version: "latest"
+                  # mdbook-version: "0.4.8"
 
             - run: mdbook build
 
